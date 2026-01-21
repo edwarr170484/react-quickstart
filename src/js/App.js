@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import Input from './components/Input';
 import Button from './components/Button';
+import Checkbox from './components/Checkbox';
+import Span from './components/Span';
 
 function uid() {
   return `${Date.now()}_${Math.random().toString(16).slice(2)}`;
@@ -17,8 +19,8 @@ export default function App() {
     if (!value) return;
 
     setTodos((prev) => [
-      { id: uid(), text: value, done: false },
       ...prev,
+      { id: uid(), text: value, done: false }
     ]);
 
     setText("");
@@ -53,21 +55,9 @@ export default function App() {
             todos.map((todo) => (
               <li key={todo.id} style={styles.item}>
                 <label style={styles.label}>
-                  <input
-                    type="checkbox"
-                    checked={todo.done}
-                    onChange={() => toggleTodo(todo.id)}
-                  />
-                  <span
-                    style={{
-                      ...styles.text,
-                      ...(todo.done ? styles.textDone : null),
-                    }}
-                  >
-                    {todo.text}
-                  </span>
+                  <Checkbox checked={todo.done} onChange={() => toggleTodo(todo.id)} />
+                  <Span style={{...styles.text, ...(todo.done ? styles.textDone : null)}}>{todo.text}</Span>
                 </label>
-
                 <Button onClick={() => deleteTodo(todo.id)} type={"button"} style={styles.deleteBtn}>
                     ✕
                 </Button>
